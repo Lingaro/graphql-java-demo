@@ -17,27 +17,22 @@ public class GraphQLExecutor {
 
     private final GraphQL graphQL;
     private final Query queryRoot;
-    private final Mutations mutationsRoot;
 
     @Autowired
-    public GraphQLExecutor(Query query, Mutations mutationsRoot)
+    public GraphQLExecutor(Query query)
             throws IllegalAccessException, NoSuchMethodException, InstantiationException {
         this.queryRoot = query;
-        this.mutationsRoot = mutationsRoot;
         this.graphQL = createGraphQLSchema();
     }
 
     public ExecutionResult execute(String query, String operationName, Map<String, Object> variables) {
-        Object root = GraphQLUtils.isMutation(query, operationName)
-                ? mutationsRoot
-                : queryRoot;
+        Object root = queryRoot;
         return graphQL.execute(query, operationName, root, variables);
     }
 
     private GraphQL createGraphQLSchema() throws IllegalAccessException, InstantiationException, NoSuchMethodException {
         GraphQLSchema schema = GraphQLSchema.newSchema()
                 .query(GraphQLAnnotations.object(Query.class))
-                .mutation(GraphQLAnnotations.object(Mutations.class))
                 .build();
         return GraphQL.newGraphQL(schema)
                 .build();

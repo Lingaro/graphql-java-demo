@@ -9,20 +9,4 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Mutations {
-    private final StoreRepository storeRepository;
-    private final ProductRepository productRepository;
-
-    public Mutations(StoreRepository storeRepository, ProductRepository productRepository) {
-        this.storeRepository = storeRepository;
-        this.productRepository = productRepository;
-    }
-
-    @GraphQLField
-    public Product addProduct(@GraphQLName("input") ProductInfo input) {
-        Product product = new Product();
-        product.setName(input.name);
-        product.setPrice(input.price);
-        product.setStore(storeRepository.findOne(input.storeId));
-        return productRepository.save(product);
-    }
 }

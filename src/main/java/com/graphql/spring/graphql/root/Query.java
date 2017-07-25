@@ -11,26 +11,6 @@ import java.util.List;
 
 @Component
 public class Query {
-
-    private final ProductRepository productRepository;
-
-    public Query(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
-    @GraphQLField
-    public String serverTime() {
-        return LocalDateTime.now().toString();
-    }
-
-    @GraphQLField
-    public List<Product> getProducts(@GraphQLName("name")String name) {
-        if(name == null) {
-            return productRepository.findAll();
-        }else{
-            return productRepository.findByNameContains(name);
-        }
-    }
 }
 
 

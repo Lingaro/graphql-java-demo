@@ -12,19 +12,16 @@ public class Store {
     private String name;
     private List<Product> products;
 
-    @GraphQLField
     @Id @GeneratedValue
     public int getId() {
         return id;
     }
 
-    @GraphQLField
     @NotNull
     public String getName() {
         return name;
     }
 
-    @GraphQLField
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
     public List<Product> getProducts() {
         return products;
