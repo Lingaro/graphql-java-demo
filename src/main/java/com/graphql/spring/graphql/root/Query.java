@@ -1,5 +1,6 @@
 package com.graphql.spring.graphql.root;
 
+import com.graphql.spring.data.TimeInfo;
 import com.graphql.spring.jpa.Product;
 import com.graphql.spring.jpa.repositories.ProductRepository;
 import graphql.annotations.GraphQLField;
@@ -19,8 +20,8 @@ public class Query {
     }
 
     @GraphQLField
-    public String serverTime() {
-        return LocalDateTime.now().toString();
+    public TimeInfo serverTime() {
+        return new TimeInfo(LocalDateTime.now());
     }
 
     @GraphQLField
