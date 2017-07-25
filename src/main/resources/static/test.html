@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head><title>GraphQL Test</title></head>
+<head>
+    <title>GraphQL Test</title>
+    <meta charset="UTF-8">
+</head>
 <script>
     function run() {
         fetch("http://localhost:8080/graphql", {
             method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8'
+            },
             body: JSON.stringify({
-                query: `{
-                  info {
-                    serverTime
-                    props(key: "PID") {
-                      value
-                    }
-                  }
-                  products(id:3){
+                query: `query flakes($name: String) {
+                  products(name:$name) {
+                    name
                     store{
                       name
                     }
                   }
-                  stores{
-                    products{
-                      price
-                    }
-                  }
-                }`
+                }`,
+                variables: {
+                    name: "płatki"
+                }
             })
         })
             .then(resp => resp.json())
