@@ -1,6 +1,5 @@
 package com.graphql.spring.graphql.root;
 
-import com.graphql.spring.data.Pair;
 import com.graphql.spring.jpa.Product;
 import com.graphql.spring.jpa.repositories.ProductRepository;
 import com.graphql.spring.jpa.repositories.StoreRepository;
@@ -10,27 +9,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Mutations {
-
-    private final ProductRepository productRepository;
     private final StoreRepository storeRepository;
+    private final ProductRepository productRepository;
 
-    public Mutations(ProductRepository productRepository, StoreRepository storeRepository) {
-        this.productRepository = productRepository;
+    public Mutations(StoreRepository storeRepository, ProductRepository productRepository) {
         this.storeRepository = storeRepository;
+        this.productRepository = productRepository;
     }
 
     @GraphQLField
-    public Pair setProperty(@GraphQLName("key") String key, @GraphQLName("value") String value) {
-        System.setProperty(key, value);
-        return new Pair(key, value);
-    }
-
-    @GraphQLField
-    public Product addProduct(@GraphQLName("input") ProductInput input) {
+    public Product addProduct(@GraphQLName("input") ProductInfo input) {
         Product product = new Product();
         product.setName(input.name);
-        product.setStore(storeRepository.findOne(input.storeId));
         product.setPrice(input.price);
+        product.setStore(storeRepository.findOne(input.storeId));
         return productRepository.save(product);
     }
 }

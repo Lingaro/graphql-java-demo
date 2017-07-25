@@ -3,6 +3,7 @@ package com.graphql.spring.jpa;
 import graphql.annotations.GraphQLField;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -11,13 +12,14 @@ public class Store {
     private String name;
     private List<Product> products;
 
-    @Id @GeneratedValue
     @GraphQLField
+    @Id @GeneratedValue
     public int getId() {
         return id;
     }
 
     @GraphQLField
+    @NotNull
     public String getName() {
         return name;
     }

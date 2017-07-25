@@ -2,9 +2,9 @@ package com.graphql.spring.jpa;
 
 import graphql.annotations.GraphQLField;
 import graphql.annotations.GraphQLName;
-import graphql.annotations.GraphQLType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @GraphQLName("Product")
@@ -15,18 +15,13 @@ public class Product {
     private double price;
 
     @GraphQLField
-    @ManyToOne(fetch = FetchType.LAZY)
-    public Store getStore() {
-        return store;
-    }
-
-    @GraphQLField
     @Id @GeneratedValue
     public int getId() {
         return id;
     }
 
     @GraphQLField
+    @NotNull
     public String getName() {
         return name;
     }
@@ -36,6 +31,14 @@ public class Product {
         return price;
     }
 
+    @GraphQLField
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Store getStore() {
+        return store;
+    }
+
+    // ------- Setters --------
     protected void setId(int id) {
         this.id = id;
     }
