@@ -9,20 +9,11 @@ http://localhost:8080/
 
 ```
 {
-  info {
-    serverTime
-    props(key: "PID") {
-      value
-    }
-  }
-  products(id:3){
+  serverTime
+  products(name:"płatki"){
+    name
     store{
       name
-    }
-  }
-  stores{
-    products{
-      price
     }
   }
 }
